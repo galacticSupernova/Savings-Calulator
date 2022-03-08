@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+
+var numberSort = {
+number: function(input) {
+
+var n = "null";
+const plusOrMinus = [];
+const plus = [];
+const minus = [];
+var lengthCount = -1;
+var previousLength = 0;
+
+// This is where the bug of adding numbers together happens which makes sense
+// because it filters out characters
+for (let i = 0; i < input.length; i++) {
+if (String(input[i]) == "0" || String(input[i]) == "1" || String(input[i]) == "2" || String(input[i]) == "3" || String(input[i]) == "4" || String(input[i]) == "5" || String(input[i]) == "6" || String(input[i]) == "7" || String(input[i]) == "8" || String(input[i]) == "9" || String(input[i]) == ".") {
+if (n == "null") {
+n=String(input[i]);
+} else {
+n[n.length]=String(input[i]);
+}
+};
+
+
+var H = "";
+// Stores numbers from about just before and after "+" or + "-"
+// Just after - is going to be zero, so if it were a length of 1,
+// it will be 0, at the start
+// Going to add a for loop that stores the numbers before the + or minus,
+// and after the last one so it can be added
+if (String(input[i]) == "+" || String(input[i]) == "-") {
+for (let x = i - 1; x < i && x !== 0; x--) {
+if (input[x] == "+" || input[x] == "-") {
+H[i-x-1] = input[x];
+}
+}
+}
+
+if (String(input[i]) == "+" || String(input[i]) == "-") {
+plusOrMinus[plusOrMinus.length] = String(n);
+if (String(input[i]) == "+") {
+lengthCount+=parseInt(String(n).length);
+plus[plus.length] = ParseInt(lengthCount-previousLength);
+} else if (String(input[i]) == "-") {
+lengthCount+=parseInt(String(n).length);
+minus[minus.length] = ParseInt(lengthCount-previousLength);
+};
+previousLength = parseInt(lengthCount);
+};
+
+// The Three brackets that are used, are breaks
+};
+
+
+// Sets the variables to zero and adds the last part of the equation for
+// addition and subtraction
+var TotalPlusValue = 0;
+var TotalMinusValue = 0;
+plusOrMinus[plusOrMinus.length] = String(n);
+
+/* --Starts at zero because they are just numbers that are sequentially added to the array-- */
+
+// Total Values, themselves, plus the previous values that were recorded
+for (let j = 0; j < plus.length; j++) {
+TotalPlusValue = (parseFloat(TotalPlusValue) + parseFloat(plusOrMinus[plus[j]]));
+}
+for (let k = 0; k < minus.length; k++) {
+TotalMinusValue = (parseFloat(TotalMinusValue) - parseFloat(plusOrMinus[minus[k]]));
+}
+
+// Finally the two are added together
+TotalPlusValue = (parseFloat(TotalPlusValue) + parseFloat(TotalMinusValue));
+
+// And the total of all of the additions and subtractions culminate to this
+for (let i = 0; i < plusOrMinus.length; i++) {
+TotalPlusValue = (parseFloat(TotalPlusValue) + parseFloat(plusOrMinus[i]));
+};
+
+// This is the culmination, obviously returned back
+return parseFloat(TotalPlusValue);
+}
+};
+
+var l = 
+parseFloat(localStorage.getItem('OHDN') * 100) + 
+parseFloat(localStorage.getItem('FYDN') * 50) + 
+parseFloat(localStorage.getItem('TYDN') * 20) + 
+parseFloat(localStorage.getItem('TDN') * 10) + 
+parseFloat(localStorage.getItem('FDN') * 5) + 
+parseFloat(localStorage.getItem('Coins')) + 
+parseFloat(localStorage.getItem('¢ Cents') / 100);
+if (isNaN(localStorage.getItem('MoneyStored'))) {
+localStorage.setItem('MoneyStored', parseFloat(0));
+}
+alert ("Hello! You currently have: " + "$" + l + " saved.\nPlease use number instead of letters.\nI am still brushing up on Javascript.\nPlease save $65 one week, and\n $135 the other, totalling $100 per week.\n It's a perfect average of differences");
+
+const OHDN = document.createElement('button');
+OHDN.innerText = '$100 Note(s) ' + "(" + localStorage.getItem('OHDN') + ")";
+OHDN.addEventListener('click', () => {
+localStorage.setItem('OHDN', parseFloat(localStorage.getItem('OHDN')) + parseFloat(numberSort.number(String(prompt("How many Note(s)?", "e.g., 1, 2, 3, etc.")))));
+OHDN.innerText = '$100 Note(s) ' + "(" + localStorage.getItem('OHDN') + ")";
+});
+document.body.appendChild(OHDN);
+
+const FYDN = document.createElement('button');
+FYDN.innerText = '$50 Note(s) ' + "(" + localStorage.getItem('FYDN') + ")";
+FYDN.addEventListener('click', () => {
+localStorage.setItem('FYDN', parseFloat(localStorage.getItem('FYDN')) + parseFloat(numberSort.number(String(prompt("How many Note(s)?", "e.g., 1, 2, 3, etc.")))));
+FYDN.innerText = '$50 Note(s) ' + "(" + localStorage.getItem('FYDN') + ")";
+});
+document.body.appendChild(FYDN);
+
+const TYDN = document.createElement('button');
+TYDN.innerText = '$20 Note(s) ' + "(" + localStorage.getItem('TYDN') + ")";
+TYDN.addEventListener('click', () => {
+localStorage.setItem('TYDN', parseFloat(localStorage.getItem('TYDN')) + parseFloat(numberSort.number(String(prompt("How many Note(s)?", "e.g., 1, 2, 3, etc.")))));
+TYDN.innerText = '$20 Note(s) ' + "(" + localStorage.getItem('TYDN') + ")";
+});
+document.body.appendChild(TYDN);
+
+const TDN = document.createElement('button');
+TDN.innerText = '$10 Note(s) ' + "(" + localStorage.getItem('TDN') + ")";
+TDN.addEventListener('click', () => {
+localStorage.setItem('TDN', parseFloat(localStorage.getItem('TDN')) + parseFloat(numberSort.number(String(prompt("How many Note(s)?", "e.g., 1, 2, 3, etc.")))));
+TDN.innerText = '$10 Note(s) ' + "(" + localStorage.getItem('TDN') + ")";
+});
+document.body.appendChild(TDN);
+
+const FDN = document.createElement('button');
+FDN.innerText = '$5 Note(s) ' + "(" + localStorage.getItem('TYDN') + ")";
+FDN.addEventListener('click', () => {
+localStorage.setItem('FDN', parseFloat(localStorage.getItem('FDN')) + parseFloat(numberSort.number(String(prompt("How many Note(s)?", "e.g., 1, 2, 3, etc.")))));
+});
+document.body.appendChild(FDN);
+
+const Coins = document.createElement('button');
+Coins.innerText = '$1 Coins ' + "(" + localStorage.getItem('Coins') + ")";
+Coins.addEventListener('click', () => {
+localStorage.setItem('Coins', parseFloat(localStorage.getItem('Coins')) + parseFloat(numberSort.number(String(prompt("How many $1 Coin(s)?", "e.g., 1, 2, 3, 4, 5, etc.")))));
+});
+document.body.appendChild(Coins);
+
+const C = document.createElement('button');
+C.innerText = '¢ Cents ' + "(" + localStorage.getItem('¢ Cents') + ")";
+C.addEventListener('click', () => {
+localStorage.setItem('¢ Cents', parseFloat(localStorage.getItem('¢ Cents')) + parseFloat(numberSort.number(String(prompt("How many Note(s)?", "e.g., 5, 10, 20, 50, etc.")))));
+});
+document.body.appendChild(C);
+
+l = 
+parseFloat(localStorage.getItem('OHDN') * 100) + 
+parseFloat(localStorage.getItem('FYDN') * 50) + 
+parseFloat(localStorage.getItem('TYDN') * 20) + 
+parseFloat(localStorage.getItem('TDN') * 10) + 
+parseFloat(localStorage.getItem('FDN') * 5) + 
+parseFloat(localStorage.getItem('Coins')) + 
+parseFloat(localStorage.getItem('¢ Cents') / 100);
+const results = document.createElement('button');
+results.innerText = "Results: " + "$" + l;
+results.addEventListener('click', () => {
+l = parseFloat(localStorage.getItem('OHDN') * 100) + 
+parseFloat(localStorage.getItem('FYDN') * 50) + 
+parseFloat(localStorage.getItem('TYDN') * 20) + 
+parseFloat(localStorage.getItem('TDN') * 10) + 
+parseFloat(localStorage.getItem('FDN') * 5) + 
+parseFloat(localStorage.getItem('Coins')) + 
+parseFloat(localStorage.getItem('¢ Cents') / 100);
+alert("You currently have " + "$" + l);
+OHDN.innerText = '$100 Note(s) ' + "(" + localStorage.getItem('OHDN') + ")";
+FYDN.innerText = '$50 Note(s) ' + "(" + localStorage.getItem('FYDN') + ")";
+TYDN.innerText = '$20 Note(s) ' + "(" + localStorage.getItem('TYDN') + ")";
+TDN.innerText = '$10 Note(s) ' + "(" + localStorage.getItem('TDN') + ")";
+FDN.innerText = '$5 Note(s) ' + "(" + localStorage.getItem('TYDN') + ")";
+Coins.innerText = '$1 Coins ' + "("
++ localStorage.getItem('Coins') + ")";
+C.innerText = '¢ Cents ' + "(" + localStorage.getItem('¢ Cents') + ")";
+results.innerText = "Results: " + "$" + l;
+});
+document.body.appendChild(results);
+
+const reset = document.createElement('button');
+reset.innerText = "Reset";
+reset.addEventListener('click', () => {
+localStorage.setItem('MoneyStored', 0);
+localStorage.setItem('OHDN', 0);
+localStorage.setItem('FYDN', 0);
+localStorage.setItem('TYDN', 0);
+localStorage.setItem('TDN', 0);
+localStorage.setItem('FDN', 0);
+localStorage.setItem('Coins', 0);
+localStorage.setItem('¢ Cents', 0);
+OHDN.innerText = '$100 Note(s) ' + "(" + localStorage.getItem('OHDN') + ")";
+FYDN.innerText = '$50 Note(s) ' + "(" + localStorage.getItem('FYDN') + ")";
+TYDN.innerText = '$20 Note(s) ' + "(" + localStorage.getItem('TYDN') + ")";
+TDN.innerText = '$10 Note(s) ' + "(" + localStorage.getItem('TDN') + ")";
+FDN.innerText = '$5 Note(s) ' + "(" + localStorage.getItem('TYDN') + ")";
+Coins.innerText = '$1 Coin(s) ' + "(" + localStorage.getItem('Coins') + ")";
+C.innerText = '¢ Cents ' + "(" + localStorage.getItem('¢ Cents') + ")";
+l = parseFloat(localStorage.getItem('OHDN') * 100) + 
+parseFloat(localStorage.getItem('FYDN') * 50) + 
+parseFloat(localStorage.getItem('TYDN') * 20) + 
+parseFloat(localStorage.getItem('TDN') * 10) + 
+parseFloat(localStorage.getItem('FDN') * 5) + 
+parseFloat(localStorage.getItem('Coins')) + 
+parseFloat(localStorage.getItem('¢ Cents') / 100);
+results.innerText = "Results " + "$" + l;
+});
+document.body.appendChild(reset);
+
+</script>
+</body>
+</html>
